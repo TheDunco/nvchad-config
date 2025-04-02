@@ -1,3 +1,4 @@
+-- I couldn't get format on save to work with this way of specifying the conform config
 -- local options = {
 --   formatters_by_ft = {
 --     lua = { "stylua" },

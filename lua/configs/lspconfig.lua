@@ -4,7 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- EXAMPLE
-local servers = { "html", "cssls" }
+local servers = { "html", "cssls", "html" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
@@ -23,12 +23,36 @@ lspconfig.ts_ls.setup {
   capabilities = nvlsp.capabilities,
   fileTypes = { "typescript", "typescriptreact", "typescript.tsx" },
   cmd = { "typescript-language-server", "--stdio" },
-  init_options = { hostInfo = "neovim" }
+  init_options = { hostInfo = "neovim" },
 }
 
-lspconfig.tailwindcss.setup{
+lspconfig.tailwindcss.setup {
   cmd = { "tailwindcss-language-server", "--stdio" },
-  fileTypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "gohtmltmpl", "haml", "handlebars", "hbs", "html", "htmlangular", "html-eex", "heex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte", "templ" }
+  fileTypes = {
+    "astro",
+    "astro-markdown",
+    "gohtml",
+    "gohtmltmpl",
+    "handlebars",
+    "html",
+    "htmlangular",
+    "html-eex",
+    "markdown",
+    "mdx",
+    "mustache",
+    "php",
+    "css",
+    "less",
+    "postcss",
+    "sass",
+    "scss",
+    "javascript",
+    "javascriptreact",
+    "rescript",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "svelte",
+    "templ",
+  },
 }
-
-
