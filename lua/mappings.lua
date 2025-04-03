@@ -29,4 +29,8 @@ map(
 )
 map("n", "<leader>fr", "<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>", default_opts)
 
+-- Get a list of LSP references in Telescope
 map("n", "gR", "<CMD>Telescope lsp_references<CR>zz")
+
+-- Show the current full filename and path
+map("n", "fn", "<CMD>echo expand ('%:p')<CR>zz")
