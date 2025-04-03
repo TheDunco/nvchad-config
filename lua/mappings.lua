@@ -28,3 +28,5 @@ map(
   default_opts
 )
 map("n", "<leader>fr", "<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>", default_opts)
+
+map("n", "gR", "<CMD>Telescope lsp_references<CR>zz")

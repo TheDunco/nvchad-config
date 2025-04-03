@@ -24,4 +24,8 @@ return {
       require "configs.conform"
     end,
   },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "BufReadPre",
+  },
 }
