@@ -15,13 +15,13 @@ return {
       }
     end,
   },
-{
-  "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    event="VeryLazy",
-  config = function()
-    require("lsp_lines").setup()
-  end,
-},
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  },
   -- Format on save
   {
     "stevearc/conform.nvim",
@@ -34,5 +34,17 @@ return {
   {
     "windwp/nvim-ts-autotag",
     event = "BufReadPre",
+  },
+  {
+    "f-person/git-blame.nvim",
+    event = "VeryLazy",
+    opts = {
+      enabled = true, -- if you want to enable the plugin
+      message_template = " <author> • <date> • <summary> <<sha>>", -- template for the blame message, check the Message template section for more options
+      date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
+      virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
+      delay = 1300, -- ms
+      max_commit_summary_length = 65,
+    },
   },
 }
