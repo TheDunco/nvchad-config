@@ -41,3 +41,8 @@ map("", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" }
 
 -- Source (reload/rerun) the current file
 map("", "<leader>rl", "<CMD>source %<CR>", { desc = "Resource the current file" })
+
+-- Yank the entire file
+map("", "y.", "<CMD>%y+<CR>", { desc = "Yank the entire file" })
+
+print "Read in mappings"

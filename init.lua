@@ -36,12 +36,13 @@ vim.schedule(function()
   require "mappings"
 end)
 
--- Try to enable virtual lines for diagnostic messages so I can see more of them. Not working for whatever reaosn though
-vim.diagnostic.config({
-  virtual_text = false,
-  virtual_lines = {
-    severity = {
-      min = vim.diagnostic.severity.ERROR,
-    },
-  },
+-- From teej_dv's Advent of Neovim course
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking text",
+  group = vim.api.nvim_create_augroup("tj-kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
+
+print "Initialized"
