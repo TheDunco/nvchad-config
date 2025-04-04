@@ -35,3 +35,13 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Try to enable virtual lines for diagnostic messages so I can see more of them. Not working for whatever reaosn though
+vim.diagnostic.config({
+  virtual_text = false,
+  virtual_lines = {
+    severity = {
+      min = vim.diagnostic.severity.ERROR,
+    },
+  },
+})

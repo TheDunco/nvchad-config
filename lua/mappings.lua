@@ -6,6 +6,7 @@ local map = vim.keymap.set
 -- Custom keymappings for me to be able to navigate with Colemak
 map({ "n", "v" }, "e", "<Up>zz")
 map({ "n", "v" }, "n", "<Down>zz")
+-- map({ "n", "v"})
 map({ "n", "v" }, "l", "i")
 map({ "n", "v" }, "L", "I")
 map({ "n", "v" }, "i", "l")
@@ -18,7 +19,7 @@ map("i", "jk", "<ESC>")
 
 map("n", "<leader>fm", function()
   require("conform").format { async = true, lsp_fallback = true }
-end, { desc = "custom format files" })
+end, { desc = "Format current file with conform" })
 
 -- Show hidden files in telescope find
 map(
@@ -32,5 +33,11 @@ map("n", "<leader>fr", "<cmd>lua require'telescope.builtin'.buffers({ show_all_b
 -- Get a list of LSP references in Telescope
 map("n", "gR", "<CMD>Telescope lsp_references<CR>zz")
 
--- Show the current full filename and path
+-- Show the current full file name and path
 map("n", "fn", "<CMD>echo expand ('%:p')<CR>zz")
+
+-- Toggle virtual LSP lines
+map("", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+
+-- Source (reload/rerun) the current file
+map("", "<leader>rl", "<CMD>source %<CR>", { desc = "Resource the current file" })
