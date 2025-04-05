@@ -3,10 +3,9 @@ local default_opts = { noremap = true }
 
 local map = vim.keymap.set
 
--- Custom keymappings for me to be able to navigate with Colemak
+-- Custom keymappings for me to be able to navigate hjkl with Colemak.
 map({ "n", "v" }, "e", "<Up>zz")
 map({ "n", "v" }, "n", "<Down>zz")
--- map({ "n", "v"})
 map({ "n", "v" }, "l", "i")
 map({ "n", "v" }, "L", "I")
 map({ "n", "v" }, "i", "l")
@@ -39,10 +38,12 @@ map("n", "fn", "<CMD>echo expand ('%:p')<CR>zz")
 -- Toggle virtual LSP lines
 map("", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
--- Source (reload/rerun) the current file
-map("", "<leader>rl", "<CMD>source %<CR>", { desc = "Resource the current file" })
+-- Source (reload/rerun) the current file/line/selection
+map("n", "<leader>rf", "<CMD>source %<CR>", { desc = "Run (source) the current file" })
+map("n", "<leader>rl", ":.lua<CR>", { desc = "Run (source) the current line" })
+map("v", "<leader>rs", ":lua<CR>", { desc = "Run (source) the current selection" })
 
 -- Yank the entire file
 map("", "y.", "<CMD>%y+<CR>", { desc = "Yank the entire file" })
 
-print "Read in mappings"
+print "✓ Done reading in custom mappings"

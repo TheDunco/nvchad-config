@@ -34,6 +34,16 @@ return {
   {
     "windwp/nvim-ts-autotag",
     event = "BufReadPre",
+    config = function()
+      require("nvim-ts-autotag").setup {
+        opts = {
+          -- Defaults
+          enable_close = true, -- Auto close tags
+          enable_rename = true, -- Auto rename pairs of tags
+          enable_close_on_slash = false, -- Auto close on trailing </
+        },
+      }
+    end,
   },
   {
     "f-person/git-blame.nvim",
@@ -47,4 +57,31 @@ return {
       max_commit_summary_length = 65,
     },
   },
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   opts = {
+  --     defaults = {
+  --       Trying to add the nvchad defaults here such that I can add this wrap_results
+  --       wrap_results = true,
+  --       prompt_prefix = "   ",
+  --       selection_caret = " ",
+  --       entry_prefix = " ",
+  --       sorting_strategy = "ascending",
+  --       layout_config = {
+  --         horizontal = {
+  --           prompt_position = "top",
+  --           preview_width = 0.55,
+  --         },
+  --         width = 0.87,
+  --         height = 0.80,
+  --       },
+  --       mappings = {
+  --         n = { ["q"] = require("telescope.actions").close },
+  --       },
+  --     },
+  --
+  --     extensions_list = { "themes", "terms" },
+  --     extensions = {},
+  --   },
+  -- },
 }
