@@ -53,35 +53,47 @@ return {
       message_template = " <author> • <date> • <summary> <<sha>>", -- template for the blame message, check the Message template section for more options
       date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
       virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
-      delay = 1300, -- ms
+      delay = 1000, -- ms
       max_commit_summary_length = 65,
     },
   },
-  -- {
-  --   "nvim-telescope/telescope.nvim",
-  --   opts = {
-  --     defaults = {
-  --       Trying to add the nvchad defaults here such that I can add this wrap_results
-  --       wrap_results = true,
-  --       prompt_prefix = "   ",
-  --       selection_caret = " ",
-  --       entry_prefix = " ",
-  --       sorting_strategy = "ascending",
-  --       layout_config = {
-  --         horizontal = {
-  --           prompt_position = "top",
-  --           preview_width = 0.55,
-  --         },
-  --         width = 0.87,
-  --         height = 0.80,
-  --       },
-  --       mappings = {
-  --         n = { ["q"] = require("telescope.actions").close },
-  --       },
-  --     },
-  --
-  --     extensions_list = { "themes", "terms" },
-  --     extensions = {},
-  --   },
-  -- },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+    -- Trying to get global ivy theme
+    -- config = function()
+    --   require("telescope").setup {
+    --     pickers = {
+    --       find_files = {
+    --         theme = "ivy",
+    --       },
+    --     },
+    --   }
+    -- end,
+    opts = {
+      defaults = {
+        -- Trying to add the nvchad defaults here such that I can add this wrap_results
+        wrap_results = true,
+        prompt_prefix = "   ",
+        selection_caret = " ",
+        entry_prefix = " ",
+        sorting_strategy = "ascending",
+        layout_config = {
+          horizontal = {
+            prompt_position = "top",
+            preview_width = 0.55,
+          },
+          width = 0.87,
+          height = 0.80,
+        },
+        -- Should move all mappings here
+        mappings = {
+          n = { ["q"] = require("telescope.actions").close },
+        },
+      },
+
+      extensions_list = { "themes", "terms" },
+      extensions = {},
+    },
+  },
 }
