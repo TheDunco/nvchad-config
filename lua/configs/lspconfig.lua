@@ -64,6 +64,8 @@ lspconfig.eslint.setup {
       command = "EslintFixAll",
     })
   end,
+  capabilities = nvlsp.capabilities,
+  on_init = nvlsp.on_init,
   fileTypes = {
     "javascript",
     "javascriptreact",
@@ -71,8 +73,5 @@ lspconfig.eslint.setup {
     "typescript",
     "typescriptreact",
     "typescript.tsx",
-    "vue",
-    "svelte",
-    "astro",
   },
 }

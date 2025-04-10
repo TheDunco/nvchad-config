@@ -1,6 +1,4 @@
 require "nvchad.mappings"
-local default_opts = { noremap = true }
-
 local map = vim.keymap.set
 
 -- Custom keymappings for me to be able to navigate hjkl with Colemak.
@@ -39,34 +37,44 @@ map("n", "<leader>fb", function()
   require("telescope.builtin").buffers(optsWithIvyTheme)
 end, { desc = "Find buffers (including hidden files)" })
 
-map("n", "<leader>fc", function()
-  local optsWithIvyTheme = require("telescope.themes").get_ivy {
-    { cmd = vim.fn.stdpath "config" },
-  }
-  require("telescope.builtin").find_files(optsWithIvyTheme)
-end, { desc = "Find files in neovim config dir" })
+map("n", "<leader>fm", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
+
+map("n", "<leader>fp", function()
+  local optsWithIvyTheme = require("telescope.themes").get_ivy()
+  require("telescope.builtin").diagnostics(optsWithIvyTheme)
+end, { desc = "Find lsp problems (diagnostics)" })
 
 -- Get a list of LSP references in Telescope
 map("n", "gR", function()
   local optsWithIvyTheme = require("telescope.themes").get_ivy()
   require("telescope.builtin").lsp_references(optsWithIvyTheme)
 end, { noremap = false })
--- map("n", "gR", "<CMD>Telescope lsp_references<CR>zz")
 
 -- Show the current full file name and path
-map("n", "fn", "<CMD>echo expand ('%:p')<CR>zz")
+map("n", "fn", "<CMD>echo expand ('%:p')<CR>")
 
 -- Toggle virtual LSP lines
-map("", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+map("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
 -- Source (reload/rerun) the current file/line/selection
 map("n", "<leader>rf", "<CMD>source %<CR>", { desc = "Run (source) the current file" })
-map("n", "<leader>rl", ":.lua<CR>", { desc = "Run (source) the current line" })
-map("v", "<leader>rs", ":lua<CR>", { desc = "Run (source) the current selection" })
+map("n", "<leader>rl", "<CMD>.lua<CR>", { desc = "Run (source) the current line" })
+map("v", "<leader>rs", "<CMD>lua<CR>", { desc = "Run (source) the current selection" })
 
 map("n", "<leader>ro", ":e #<CR>", { desc = "Reopen the last closed buffer " })
 
--- Yank the entire file
-map("", "y.", "<CMD>%y+<CR>", { desc = "Yank the entire file" })
+-- Yank the entire file (default nvchad command is <C-c> (control + c))
+map("n", "y.", "<CMD>%y+<CR>", { desc = "Yank the entire file" })
+
+-- Show the full file path of the tabline buffer in the command line
+map("n", "<tab>", function()
+  require("nvchad.tabufline").next()
+  vim.cmd "echo expand ('%:p')"
+end, { desc = "buffer goto next" })
+
+map("n", "<S-tab>", function()
+  require("nvchad.tabufline").prev()
+  vim.cmd "echo expand ('%:p')"
+end, { desc = "buffer goto prev" })
 
 print "✓ Done reading in custom mappings"
