@@ -8,8 +8,8 @@ map({ "n", "v" }, "l", "i")
 map({ "n", "v" }, "L", "I")
 map({ "n", "v" }, "i", "l")
 map({ "n", "v" }, "I", "L")
-map({ "n", "v" }, "k", "n")
-map({ "n", "v" }, "K", "N")
+map({ "n", "v" }, "k", "nzz")
+map({ "n", "v" }, "K", "Nzz")
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
@@ -37,7 +37,8 @@ map("n", "<leader>fb", function()
   require("telescope.builtin").buffers(optsWithIvyTheme)
 end, { desc = "Find buffers (including hidden files)" })
 
-map("n", "<leader>fm", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
+map("n", "<leader>fmap", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
+map("n", "<leader>fmac", "<CMD>e ~/.config/nvim/lua/macros.lua<CR>", { desc = "Edit mappings" })
 
 map("n", "<leader>fp", function()
   local optsWithIvyTheme = require("telescope.themes").get_ivy()
@@ -55,6 +56,11 @@ map("n", "fn", "<CMD>echo expand ('%:p')<CR>")
 
 -- Toggle virtual LSP lines
 map("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+
+-- Toggle spell-checking
+map("n", "<leader>ts", function()
+  vim.o.spell = not vim.o.spell
+end, { desc = "Toggle spell-checking" })
 
 -- Source (reload/rerun) the current file/line/selection
 map("n", "<leader>rf", "<CMD>source %<CR>", { desc = "Run (source) the current file" })
@@ -76,5 +82,12 @@ map("n", "<S-tab>", function()
   require("nvchad.tabufline").prev()
   vim.cmd "echo expand ('%:p')"
 end, { desc = "buffer goto prev" })
+
+-- Open a new terminal as a buffer
+map("n", "<leader>bt", function()
+  vim.cmd "term"
+  vim.o.nu = false
+  vim.o.spell = false
+end, { desc = "Open a terminal in a new buffer" })
 
 print "✓ Done reading in custom mappings"

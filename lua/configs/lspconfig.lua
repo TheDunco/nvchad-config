@@ -66,6 +66,9 @@ lspconfig.eslint.setup {
   end,
   capabilities = nvlsp.capabilities,
   on_init = nvlsp.on_init,
+  lsp_fallback = true,
+  async = true,
+  timeout = 1500,
   fileTypes = {
     "javascript",
     "javascriptreact",
