@@ -16,6 +16,7 @@ map("i", "jk", "<ESC>")
 
 map("n", "<leader>fm", function()
   require("conform").format { async = true, lsp_fallback = true }
+  vim.cmd "echo 'Formatted file'"
 end, { desc = "Format current file with conform" })
 
 -- TELESCOPE --
@@ -37,8 +38,9 @@ map("n", "<leader>fb", function()
   require("telescope.builtin").buffers(optsWithIvyTheme)
 end, { desc = "Find buffers (including hidden files)" })
 
-map("n", "<leader>fmap", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
-map("n", "<leader>fmac", "<CMD>e ~/.config/nvim/lua/macros.lua<CR>", { desc = "Edit mappings" })
+map("n", "<leader>map", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
+map("n", "<leader>mac", "<CMD>e ~/.config/nvim/lua/macros.lua<CR>", { desc = "Edit mappings" })
+map("n", "<leader>lsp", "<CMD>e ~/.config/nvim/lua/configs/lspconfig.lua<CR>", { desc = "Edit lsp config" })
 
 map("n", "<leader>fp", function()
   local optsWithIvyTheme = require("telescope.themes").get_ivy()
@@ -89,5 +91,23 @@ map("n", "<leader>bt", function()
   vim.o.nu = false
   vim.o.spell = false
 end, { desc = "Open a terminal in a new buffer" })
+
+map("n", "<leader>lint", function()
+  vim.cmd "EslintFixAll"
+  vim.cmd "echo 'Fixed all autofixable eslint issues'"
+end)
+
+-- TSTools
+map("n", "<leader>ia", function()
+  vim.cmd "TSToolsAddMissingImports"
+  vim.cmd "echo 'Added missing imports ✓'"
+end)
+
+map("n", "<leader>ir", function()
+  vim.cmd "TSToolsRemoveUnusedImports"
+  vim.cmd "echo 'Removed unused imports ✓'"
+end)
+
+-- map("n", "gd", "<CMD>TSToolsGoToSourceDefinition<CR>")
 
 print "✓ Done reading in custom mappings"

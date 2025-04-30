@@ -11,4 +11,9 @@ vim.fn.setreg("b", 'vl"S`l' .. esc .. 'ids"')
 -- Replace '' with "" (surround)
 vim.fn.setreg("q", "vl'S\"ds'")
 
+-- Template to disable an eslint rule
+vim.fn.setreg("e", "O// eslint-disable-next-line -- ")
+
+vim.fn.setreg("c", "L{/* " .. esc .. "A */}" .. esc .. "")
+
 print "Done reading in custom macros"
