@@ -1,29 +1,3 @@
--- I couldn't get format on save to work with this way of specifying the conform config
--- local options = {
---   formatters_by_ft = {
---     lua = { "stylua" },
---     css = { "prettier" },
---     scss = { "prettier" },
---     html = { "prettier" },
---     javascript = { "prettier" },
---     javascriptreact = { "prettier" },
---     typescript = { "prettier" },
---     typescriptreact = { "prettier" },
---   },
---
---
---   format_on_save = {
---     -- These options will be passed to conform.format()
---     timeout_ms = 500,
---     lsp_fallback = true,
---   },
---   -- format_after_save = {
---   --   lsp_fallback = true,
---   -- }
--- }
---
--- return options
-
 local conform = require "conform"
 
 conform.setup {
@@ -32,7 +6,7 @@ conform.setup {
     html = { "prettier" },
     css = { "prettier" },
     scss = { "prettier" },
-    javascript = { "prettier" },
+    -- javascript = { "prettier" },
     typescript = { "prettier" },
     json = { "prettier" },
     javascriptreact = { "prettier" }, -- JSX

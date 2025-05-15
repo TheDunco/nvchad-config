@@ -69,7 +69,7 @@ map("n", "<leader>rf", "<CMD>source %<CR>", { desc = "Run (source) the current f
 map("n", "<leader>rl", "<CMD>.lua<CR>", { desc = "Run (source) the current line" })
 map("v", "<leader>rs", "<CMD>lua<CR>", { desc = "Run (source) the current selection" })
 
-map("n", "<leader>ro", ":e #<CR>", { desc = "Reopen the last closed buffer " })
+map("n", "<leader>ro", ":e #<CR>", { desc = "Go to the last buffer" })
 
 -- Yank the entire file (default nvchad command is <C-c> (control + c))
 map("n", "y.", "<CMD>%y+<CR>", { desc = "Yank the entire file" })
@@ -97,17 +97,36 @@ map("n", "<leader>lint", function()
   vim.cmd "echo 'Fixed all autofixable eslint issues'"
 end)
 
--- TSTools
-map("n", "<leader>ia", function()
-  vim.cmd "TSToolsAddMissingImports"
-  vim.cmd "echo 'Added missing imports ✓'"
+-- Oil
+map("n", "<leader>o", function()
+  vim.cmd "Oil --float"
 end)
 
-map("n", "<leader>ir", function()
-  vim.cmd "TSToolsRemoveUnusedImports"
-  vim.cmd "echo 'Removed unused imports ✓'"
-end)
+-- TSTools
+-- map("n", "<leader>ia", function()
+--   vim.cmd "TSToolsAddMissingImports"
+--   vim.cmd "echo 'Added missing imports ✓'"
+-- end)
+--
+-- map("n", "<leader>ir", function()
+--   vim.cmd "TSToolsRemoveUnusedImports"
+--   vim.cmd "echo 'Removed unused imports ✓'"
+-- end)
 
 -- map("n", "gd", "<CMD>TSToolsGoToSourceDefinition<CR>")
+
+-- Remap control + c/v to yank/paste from the system clipboard
+map("n", "<C-C>", '"+y')
+map("n", "<C-V>", '"+p')
+
+-- Upload the current to NS
+map("n", "<leader>up", function()
+  vim.cmd "term pnpm ns:upload %:t"
+end)
+
+-- Import the current file from the cabinet
+map("n", "<leader>imp", function()
+  vim.cmd "term pnpm ns:import %:t"
+end)
 
 print "✓ Done reading in custom mappings"

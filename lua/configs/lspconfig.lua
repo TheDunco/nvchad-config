@@ -68,6 +68,7 @@ lspconfig.eslint.setup {
   --   end,
   -- })
   -- end,
+  cmd = { "vscode-eslint-language-server", "--stdio" },
   capabilities = nvlsp.capabilities,
   on_init = nvlsp.on_init,
   lsp_fallback = true,
