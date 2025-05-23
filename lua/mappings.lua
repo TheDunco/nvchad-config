@@ -14,6 +14,15 @@ map({ "n", "v" }, "K", "Nzz")
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+-- -- F jump/navigation remaps
+-- map("n", "<leader>,", function()
+--   -- what to put?
+-- end, { desc = "Previous f jump" })
+--
+-- map("n", "<leader>.", function()
+--   -- what to put?
+-- end, { desc = "Next f jump" })
+
 map("n", "<leader>fm", function()
   require("conform").format { async = true, lsp_fallback = true }
   vim.cmd "echo 'Formatted file'"
@@ -46,6 +55,16 @@ map("n", "<leader>fp", function()
   local optsWithIvyTheme = require("telescope.themes").get_ivy()
   require("telescope.builtin").diagnostics(optsWithIvyTheme)
 end, { desc = "Find lsp problems (diagnostics)" })
+
+map("n", "<leader>fx", require("telescope.builtin").resume, {
+  noremap = true,
+  silent = true,
+  desc = "Resume",
+})
+
+map("n", "<leader>f*", function()
+  require("telescope.builtin").live_grep { default_text = vim.fn.expand "<cword>" }
+end)
 
 -- Get a list of LSP references in Telescope
 map("n", "gR", function()
@@ -100,7 +119,7 @@ end)
 -- Oil
 map("n", "<leader>o", function()
   vim.cmd "Oil --float"
-end)
+end, { desc = "Open Oil.nvim" })
 
 -- TSTools
 -- map("n", "<leader>ia", function()
@@ -115,18 +134,26 @@ end)
 
 -- map("n", "gd", "<CMD>TSToolsGoToSourceDefinition<CR>")
 
--- Remap control + c/v to yank/paste from the system clipboard
-map("n", "<C-C>", '"+y')
-map("n", "<C-V>", '"+p')
+-- -- Remap control + c/v to yank/paste from the system clipboard
+-- map("n", "<C-C>", '"+y')
+-- map("n", "<C-V>", '"+p')
 
--- Upload the current to NS
 map("n", "<leader>up", function()
   vim.cmd "term pnpm ns:upload %:t"
-end)
+end, { desc = "Upload the current file to the file cabinet" })
 
--- Import the current file from the cabinet
 map("n", "<leader>imp", function()
   vim.cmd "term pnpm ns:import %:t"
-end)
+end, { desc = "Import the current file from the file cabinet" })
+
+map("n", "<leader>ww", function()
+  vim.cmd "noautocmd write"
+end, { desc = "Write without running autocmds" })
+
+map("n", "<leader>lw", function()
+  vim.cmd "EslintFixAll"
+  vim.cmd "echo 'Linted'"
+  vim.cmd "noautocmd write"
+end, { desc = "Lint then write without autocmds" })
 
 print "✓ Done reading in custom mappings"
