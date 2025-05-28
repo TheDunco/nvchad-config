@@ -26,7 +26,7 @@ map("i", "jk", "<ESC>")
 map("n", "<leader>fm", function()
   require("conform").format { async = true, lsp_fallback = true }
   vim.cmd "echo 'Formatted file'"
-end, { desc = "Format current file with conform" })
+end, { desc = "Format current file with conform.nvim" })
 
 -- TELESCOPE --
 -- Show hidden files in telescope find
@@ -45,7 +45,7 @@ map("n", "<leader>fb", function()
     show_all_buffers = true,
   }
   require("telescope.builtin").buffers(optsWithIvyTheme)
-end, { desc = "Find buffers (including hidden files)" })
+end, { desc = "Find buffers" })
 
 map("n", "<leader>map", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
 map("n", "<leader>mac", "<CMD>e ~/.config/nvim/lua/macros.lua<CR>", { desc = "Edit mappings" })
@@ -59,24 +59,24 @@ end, { desc = "Find lsp problems (diagnostics)" })
 map("n", "<leader>fx", require("telescope.builtin").resume, {
   noremap = true,
   silent = true,
-  desc = "Resume",
+  desc = "Resume last telescope search",
 })
 
 map("n", "<leader>f*", function()
   require("telescope.builtin").live_grep { default_text = vim.fn.expand "<cword>" }
-end)
+end, { desc = "Live grep the symbol under the cursor in Telescope" })
 
 -- Get a list of LSP references in Telescope
 map("n", "gR", function()
   local optsWithIvyTheme = require("telescope.themes").get_ivy()
   require("telescope.builtin").lsp_references(optsWithIvyTheme)
-end, { noremap = false })
+end, { noremap = false, desc = "Open LSP references in Telescope" })
 
 -- Show the current full file name and path
 map("n", "fn", "<CMD>echo expand ('%:p')<CR>")
 
 -- Toggle virtual LSP lines
-map("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+map("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle virtual lsp_lines" })
 
 -- Toggle spell-checking
 map("n", "<leader>ts", function()
@@ -97,12 +97,12 @@ map("n", "y.", "<CMD>%y+<CR>", { desc = "Yank the entire file" })
 map("n", "<tab>", function()
   require("nvchad.tabufline").next()
   vim.cmd "echo expand ('%:p')"
-end, { desc = "buffer goto next" })
+end, { desc = "Buffer goto next" })
 
 map("n", "<S-tab>", function()
   require("nvchad.tabufline").prev()
   vim.cmd "echo expand ('%:p')"
-end, { desc = "buffer goto prev" })
+end, { desc = "Buffer goto prev" })
 
 -- Open a new terminal as a buffer
 map("n", "<leader>bt", function()
@@ -114,12 +114,12 @@ end, { desc = "Open a terminal in a new buffer" })
 map("n", "<leader>lint", function()
   vim.cmd "EslintFixAll"
   vim.cmd "echo 'Fixed all autofixable eslint issues'"
-end)
+end, { desc = "Fix all autofixable eslint issues" })
 
 -- Oil
 map("n", "<leader>o", function()
   vim.cmd "Oil --float"
-end, { desc = "Open Oil.nvim" })
+end, { desc = "Open Oil.nvim (float)" })
 
 -- TSTools
 -- map("n", "<leader>ia", function()
@@ -134,10 +134,7 @@ end, { desc = "Open Oil.nvim" })
 
 -- map("n", "gd", "<CMD>TSToolsGoToSourceDefinition<CR>")
 
--- -- Remap control + c/v to yank/paste from the system clipboard
--- map("n", "<C-C>", '"+y')
--- map("n", "<C-V>", '"+p')
-
+-- File Cabinet
 map("n", "<leader>up", function()
   vim.cmd "term pnpm ns:upload %:t"
 end, { desc = "Upload the current file to the file cabinet" })
@@ -146,14 +143,15 @@ map("n", "<leader>imp", function()
   vim.cmd "term pnpm ns:import %:t"
 end, { desc = "Import the current file from the file cabinet" })
 
+-- For working in envs where the setup is to format on save via ESLint
 map("n", "<leader>ww", function()
   vim.cmd "noautocmd write"
-end, { desc = "Write without running autocmds" })
+end, { desc = "Write without running autocmds (conform)" })
 
 map("n", "<leader>lw", function()
   vim.cmd "EslintFixAll"
   vim.cmd "echo 'Linted'"
   vim.cmd "noautocmd write"
-end, { desc = "Lint then write without autocmds" })
+end, { desc = "Lint, then write without autocmds" })
 
 print "✓ Done reading in custom mappings"

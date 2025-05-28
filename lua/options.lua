@@ -18,5 +18,3 @@ if vim.g.neovide then
   vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
   vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
 end
-
-vim.cmd "echo 'set options'"

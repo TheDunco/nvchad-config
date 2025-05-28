@@ -45,4 +45,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- Enable cursor smearing
+require("smear_cursor").enabled = true
+
 print "Initialized"
