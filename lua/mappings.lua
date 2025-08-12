@@ -154,4 +154,9 @@ map("n", "<leader>lw", function()
   vim.cmd "noautocmd write"
 end, { desc = "Lint, then write without autocmds" })
 
+-- Smear cursor toggling
+map("n", "<leader>tc", function()
+  require("smear_cursor").enabled = not require("smear_cursor").enabled
+end, { desc = "Toggle cursor smearing" })
+
 print "✓ Done reading in custom mappings"

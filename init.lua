@@ -45,7 +45,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- Enable cursor smearing
-require("smear_cursor").enabled = true
+-- Doesn't seem to be working to add my snippets whether I do the containing path or the actual file
+vim.g.vscode_snippets_path = "~/dev/personal/zsh_shortcuts"
+
+-- Enable spell checking by default
+vim.o.spell = true
 
 print "Initialized"

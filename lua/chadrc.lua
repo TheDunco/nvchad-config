@@ -19,6 +19,8 @@ M.ui = {
   tabufline = {
     lazyload = false,
   },
+  statusline = {},
+  cmp = { style = "atom_colored" },
 }
 
 return M
