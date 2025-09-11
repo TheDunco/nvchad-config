@@ -121,6 +121,10 @@ map("n", "<leader>o", function()
   vim.cmd "Oil --float"
 end, { desc = "Open Oil.nvim (float)" })
 
+map("n", "<leader>e", function()
+  vim.cmd "Oil"
+end, { desc = "Open Oil.nvim" })
+
 -- TSTools
 -- map("n", "<leader>ia", function()
 --   vim.cmd "TSToolsAddMissingImports"
@@ -158,5 +162,18 @@ end, { desc = "Lint, then write without autocmds" })
 map("n", "<leader>tc", function()
   require("smear_cursor").enabled = not require("smear_cursor").enabled
 end, { desc = "Toggle cursor smearing" })
+
+-- Other
+map("n", "<leader>lsr", function()
+  vim.cmd "LspRestart"
+end, { desc = "Restart the LSP(s)" })
+
+map("n", "<leader>alias", function()
+  vim.cmd "e ~/.aliases.zshrc"
+end, { desc = "Edit bash aliases" })
+
+map("n", "<leader>qc", function()
+  vim.cmd "cclose"
+end, { desc = "Close the quickfix list " })
 
 print "✓ Done reading in custom mappings"
