@@ -147,5 +147,14 @@ return {
       }
     end,
   },
-  { "nvim-tree/nvim-tree.lua", enabled = false },
+  {
+    "gruvw/strudel.nvim",
+    build = "npm ci",
+    config = function()
+      require("strudel").setup {
+        update_on_save = true,
+        browser_exec_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      }
+    end,
+  },
 }

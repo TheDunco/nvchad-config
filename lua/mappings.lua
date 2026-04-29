@@ -2,14 +2,16 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 
 -- Custom keymappings for me to be able to navigate hjkl with Colemak.
-map({ "n", "v" }, "e", "<Up>zz")
-map({ "n", "v" }, "n", "<Down>zz")
+map({ "n", "v" }, "e", "<Up>")
+map({ "n", "v" }, "n", "<Down>")
 map({ "n", "v" }, "l", "i")
 map({ "n", "v" }, "L", "I")
 map({ "n", "v" }, "i", "l")
 map({ "n", "v" }, "I", "L")
 map({ "n", "v" }, "k", "nzz")
 map({ "n", "v" }, "K", "Nzz")
+map({ "n", "v" }, "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+map({ "n", "v" }, "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
@@ -31,13 +33,15 @@ end, { desc = "Format current file with conform.nvim" })
 -- TELESCOPE --
 -- Show hidden files in telescope find
 map("n", "<leader>ff", function()
-  local optsWithIvyTheme = require("telescope.themes").get_ivy {
-    {
-      find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
-      desc = "Find files (including hidden)",
-    },
+  require("telescope.builtin").find_files { hidden = true, file_ignore_patterns = { ".git/" } }
+end)
+
+map("n", "<leader>fw", function()
+  require("telescope.builtin").live_grep {
+    additional_args = function()
+      return { "--hidden", "-g", "!**/.git/*" }
+    end,
   }
-  require("telescope.builtin").find_files(optsWithIvyTheme)
 end)
 
 map("n", "<leader>fb", function()
@@ -46,6 +50,18 @@ map("n", "<leader>fb", function()
   }
   require("telescope.builtin").buffers(optsWithIvyTheme)
 end, { desc = "Find buffers" })
+
+map("n", "<leader>fl", function()
+  require("telescope.builtin").lsp_document_symbols()
+end)
+
+map("n", "<leader>fmark", function()
+  require("telescope.builtin").marks()
+end)
+
+map("n", "<leader>fgc", function()
+  require("telescope.builtin").git_commits()
+end)
 
 map("n", "<leader>map", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
 map("n", "<leader>mac", "<CMD>e ~/.config/nvim/lua/macros.lua<CR>", { desc = "Edit mappings" })
@@ -73,7 +89,7 @@ map("n", "gR", function()
 end, { noremap = false, desc = "Open LSP references in Telescope" })
 
 -- Show the current full file name and path
-map("n", "fn", "<CMD>echo expand ('%:p')<CR>")
+map("n", "<leader>fn", "<CMD>echo expand ('%:p')<CR>")
 
 -- Toggle virtual LSP lines
 map("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle virtual lsp_lines" })
@@ -125,19 +141,6 @@ map("n", "<leader>e", function()
   vim.cmd "Oil"
 end, { desc = "Open Oil.nvim" })
 
--- TSTools
--- map("n", "<leader>ia", function()
---   vim.cmd "TSToolsAddMissingImports"
---   vim.cmd "echo 'Added missing imports ✓'"
--- end)
---
--- map("n", "<leader>ir", function()
---   vim.cmd "TSToolsRemoveUnusedImports"
---   vim.cmd "echo 'Removed unused imports ✓'"
--- end)
-
--- map("n", "gd", "<CMD>TSToolsGoToSourceDefinition<CR>")
-
 -- File Cabinet
 map("n", "<leader>up", function()
   vim.cmd "term pnpm ns:upload %:t"
@@ -158,11 +161,6 @@ map("n", "<leader>lw", function()
   vim.cmd "noautocmd write"
 end, { desc = "Lint, then write without autocmds" })
 
--- Smear cursor toggling
-map("n", "<leader>tc", function()
-  require("smear_cursor").enabled = not require("smear_cursor").enabled
-end, { desc = "Toggle cursor smearing" })
-
 -- Other
 map("n", "<leader>lsr", function()
   vim.cmd "LspRestart"
@@ -175,5 +173,30 @@ end, { desc = "Edit bash aliases" })
 map("n", "<leader>qc", function()
   vim.cmd "cclose"
 end, { desc = "Close the quickfix list " })
+
+-- vs'S`ds'
+-- Might have to set a macro in a register and run it instead
+-- map("n", "<leader>sr'", function()
+--   vim.cmd "vs'S`ds'"
+-- end, { desc = "Replace ' with `" })
+
+-- Strudel
+local strudel = require "strudel"
+
+vim.keymap.set("n", "<leader>sl", strudel.launch, { desc = "Launch Strudel" })
+vim.keymap.set("n", "<leader>sq", strudel.quit, { desc = "Quit Strudel" })
+vim.keymap.set("n", "<leader>st", strudel.toggle, { desc = "Strudel Toggle Play/Stop" })
+vim.keymap.set("n", "<leader>su", strudel.update, { desc = "Strudel Update" })
+vim.keymap.set("n", "<leader>ss", strudel.stop, { desc = "Strudel Stop Playback" })
+vim.keymap.set("n", "<leader>sb", strudel.set_buffer, { desc = "Strudel set current buffer" })
+vim.keymap.set("n", "<leader>sx", strudel.execute, { desc = "Strudel set current buffer and update" })
+
+vim.keymap.set("n", "<leader>>", function()
+  vim.cmd "vertical resize +10"
+end)
+
+vim.keymap.set("n", "<leader><", function()
+  vim.cmd "vertical resize -10"
+end)
 
 print "✓ Done reading in custom mappings"
