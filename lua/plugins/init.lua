@@ -157,4 +157,39 @@ return {
       }
     end,
   },
+  {
+    "chenasraf/text-transform.nvim",
+    tag = "stable",
+    -- Add this to load it as soon as you open a file
+    event = "BufReadPost",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function()
+      -- Ensure dependencies are loaded
+      local status_ok, _ = pcall(require, "telescope")
+      if not status_ok then
+        return
+      end
+      -- Removed the extra outer curly braces here
+      require("text-transform").setup {
+        debug = false,
+        keymap = {
+          telescope_popup = {
+            ["n"] = "<Leader>~",
+            ["v"] = "<Leader>~",
+          },
+        },
+        replacers = {
+          camel_case = { enabled = true },
+          const_case = { enabled = true },
+          dot_case = { enabled = true },
+          kebab_case = { enabled = true },
+          pascal_case = { enabled = true },
+          snake_case = { enabled = true },
+          title_case = { enabled = true },
+        },
+        sort_by = "frequency",
+        popup_type = "select",
+      }
+    end,
+  },
 }

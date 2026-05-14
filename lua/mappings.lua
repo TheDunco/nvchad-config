@@ -10,11 +10,12 @@ map({ "n", "v" }, "i", "l")
 map({ "n", "v" }, "I", "L")
 map({ "n", "v" }, "k", "nzz")
 map({ "n", "v" }, "K", "Nzz")
+-- map({ "n", "v" }, "n", "Nzz")
+-- map({ "n", "v" }, "N", "Nzz")
 map({ "n", "v" }, "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
 map({ "n", "v" }, "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
 
 -- -- F jump/navigation remaps
 -- map("n", "<leader>,", function()
@@ -39,10 +40,13 @@ end)
 map("n", "<leader>fw", function()
   require("telescope.builtin").live_grep {
     additional_args = function()
-      return { "--hidden", "-g", "!**/.git/*" }
+      return { "--hidden", "-g", "!**/.git/*", "--pcre2" }
     end,
   }
 end)
+
+-- Struggling to get this plugin to work with telescope for some reason
+-- map("n", "<leader>~", "<CMD>TtTelescope<CR>", { silent = true, desc = "Transform Text" })
 
 map("n", "<leader>fb", function()
   local optsWithIvyTheme = require("telescope.themes").get_ivy {
@@ -141,7 +145,7 @@ map("n", "<leader>e", function()
   vim.cmd "Oil"
 end, { desc = "Open Oil.nvim" })
 
--- File Cabinet
+-- NS File Cabinet
 map("n", "<leader>up", function()
   vim.cmd "term pnpm ns:upload %:t"
 end, { desc = "Upload the current file to the file cabinet" })

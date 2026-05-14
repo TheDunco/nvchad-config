@@ -45,6 +45,19 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- Show line numbers in Telescope preview
+vim.api.nvim_create_autocmd("User", {
+  pattern = "TelescopePreviewerLoaded",
+  callback = function(args)
+    -- Enable line numbers
+    vim.wo.number = true
+    -- Optional: Disable numbers for specific filetypes (like help)
+    if args.data.filetype == "help" then
+      vim.wo.number = false
+    end
+  end,
+})
+
 -- Doesn't seem to be working to add my snippets whether I do the containing path or the actual file
 vim.g.vscode_snippets_path = "~/dev/personal/zsh_shortcuts"
 
