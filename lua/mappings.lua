@@ -98,6 +98,12 @@ map("n", "<leader>fn", "<CMD>echo expand ('%:p')<CR>")
 -- Toggle virtual LSP lines
 map("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle virtual lsp_lines" })
 
+-- Treesitter context
+map("n", "<leader>tc", "<CMD>TSContext toggle<CR>", { desc = "Toggle treesitter context" })
+map("n", "<leader>cont", function()
+  require("treesitter-context").go_to_context(vim.v.count1)
+end, { silent = true, desc = "Jump to treesitter context" })
+
 -- Toggle spell-checking
 map("n", "<leader>ts", function()
   vim.o.spell = not vim.o.spell
@@ -129,6 +135,8 @@ map("n", "<leader>bt", function()
   vim.cmd "term"
   vim.o.nu = false
   vim.o.spell = false
+  vim.o.number = false
+  vim.o.relativenumber = false
 end, { desc = "Open a terminal in a new buffer" })
 
 map("n", "<leader>lint", function()
