@@ -31,6 +31,10 @@ map("n", "<leader>fm", function()
   vim.cmd "echo 'Formatted file'"
 end, { desc = "Format current file with conform.nvim" })
 
+map("n", "<leader>ti", function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "Toggle lsp inlay hints" })
+
 -- TELESCOPE --
 -- Show hidden files in telescope find
 map("n", "<leader>ff", function()
@@ -66,6 +70,17 @@ end)
 map("n", "<leader>fgc", function()
   require("telescope.builtin").git_commits()
 end)
+
+map("n", "<leader>fbr", function()
+  require("telescope.builtin").git_branches()
+end)
+
+map(
+  "n",
+  "<leader>env",
+  "<CMD>e /Users/duncanvankeulen/dev/commerce/apps/storefront/.env.local<CR>",
+  { desc = "Edit storefront env" }
+)
 
 map("n", "<leader>map", "<CMD>e ~/.config/nvim/lua/mappings.lua<CR>", { desc = "Edit mappings" })
 map("n", "<leader>mac", "<CMD>e ~/.config/nvim/lua/macros.lua<CR>", { desc = "Edit mappings" })

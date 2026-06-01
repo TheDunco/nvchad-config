@@ -64,4 +64,6 @@ vim.g.vscode_snippets_path = "~/dev/personal/zsh_shortcuts"
 -- Enable spell checking by default
 vim.o.spell = true
 
+vim.lsp.inlay_hint.enable(true)
+
 print "Initialized"

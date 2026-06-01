@@ -24,6 +24,15 @@ lspconfig.ts_ls.setup {
   fileTypes = { "typescript", "typescriptreact", "typescript.tsx" },
   cmd = { "typescript-language-server", "--stdio" },
   init_options = { hostInfo = "neovim" },
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayVariableTypeHints = true,
+        -- Add other specific hint types here
+      },
+    },
+  },
 }
 
 lspconfig.tailwindcss.setup {
