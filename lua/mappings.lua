@@ -1,6 +1,15 @@
 require "nvchad.mappings"
 local map = vim.keymap.set
 
+map("n", "<O-j>", ":m .+1<CR>==", { desc = "Move line down" })
+map("i", "<O-j>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
+map("v", "<O-j>", ":m '>+1<CR>gv=gv", { desc = "Move block down" })
+
+-- can't get this to work
+map("n", "<O-k>", ":m .-2<CR>==", { desc = "Move line up" })
+map("i", "<O-k>", "<Esc>:m .-2<CR>==gi", { desc = "Move line up" })
+map("v", "<O-k>", ":m '<-2<CR>gv=gv", { desc = "Move block up" })
+
 -- Custom keymappings for me to be able to navigate hjkl with Colemak.
 map({ "n", "v" }, "e", "<Up>")
 map({ "n", "v" }, "n", "<Down>")
@@ -188,11 +197,27 @@ map("n", "<leader>lw", function()
   vim.cmd "noautocmd write"
 end, { desc = "Lint, then write without autocmds" })
 
--- Other
+map("n", "<leader>ow", function()
+  vim.cmd "OxcFixAll"
+  vim.cmd "echo 'Linted (Ox)'"
+  vim.cmd "noautocmd write"
+end, { desc = "Lint with Oxclint, then write without autocmds" })
+
 map("n", "<leader>lsr", function()
   vim.cmd "LspRestart"
 end, { desc = "Restart the LSP(s)" })
 
+map("n", "<leader>lspls", function()
+  for _, c in ipairs(vim.lsp.get_clients { bufnr = 0 }) do
+    print(c.name, c.id)
+  end
+end)
+
+map("n", "<leader>dr", function()
+  vim.diagnostic.reset()
+end, { desc = "Reset the LSP diagnostics" })
+
+-- Other
 map("n", "<leader>alias", function()
   vim.cmd "e ~/.aliases.zshrc"
 end, { desc = "Edit bash aliases" })
