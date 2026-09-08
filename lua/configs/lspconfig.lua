@@ -65,20 +65,8 @@ lspconfig.tailwindcss.setup {
   },
 }
 
--- lspconfig.oxlint.setup {
---   cmd = { "oxlint", "--lsp" },
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
---   filetypes = {
---     "javascript",
---     "javascriptreact",
---     "javascript.jsx",
---     "typescript",
---     "typescriptreact",
---     "typescript.tsx",
---   },
--- }
+local caps = vim.deepcopy(nvlsp.capabilities)
+caps.textDocument.diagnostic = nil -- forces oxlint into push mode, so `run` is honored
 
 lspconfig.oxlint.setup {
   cmd = function(dispatchers, config)
@@ -91,23 +79,44 @@ lspconfig.oxlint.setup {
     end
     return vim.lsp.rpc.start({ cmd, "--lsp" }, dispatchers)
   end,
+  capabilities = caps,
+  on_new_config = function(new_config, root_dir)
+    new_config.init_options = {
+      { workspaceUri = vim.uri_from_fname(root_dir), options = { run = "onSave" } },
+    }
+  end,
 
-  capabilities = nvlsp.capabilities,
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  settings = {
-    run = "onSave",
-  },
+  on_init = function(client, result)
+    nvlsp.on_init(client, result)
+    local folders = client.workspace_folders or {}
+    local settings = {}
+    for _, f in ipairs(folders) do
+      table.insert(settings, { workspaceUri = f.uri, options = { run = "onSave" } })
+    end
+    if #settings > 0 then
+      client.notify("workspace/didChangeConfiguration", { settings = settings })
+    end
+  end,
 
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "svelte",
-    "astro",
-  },
+  on_attach = function(client, bufnr)
+    nvlsp.on_attach(client, bufnr)
+    local last = -1
+    vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+      buffer = bufnr,
+      callback = function()
+        local tick = vim.b[bufnr].changedtick
+        if tick == last then
+          return
+        end
+        last = tick
+        client.notify("textDocument/didSave", {
+          textDocument = { uri = vim.uri_from_bufnr(bufnr) },
+        })
+      end,
+    })
+  end,
+
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro" },
 }
 
 -- lspconfig.eslint.setup {
